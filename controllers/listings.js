@@ -1,7 +1,29 @@
 const Listing = require("../models/listing");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const multer = require("multer");
+
+// Cloudinary configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Configure storage for multer to use Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "listings", // Name of the folder in Cloudinary where the images will be stored
+    allowedFormats: ["jpeg", "png", "jpg"], // Accepted formats
+  },
+});
+
+const upload = multer({ storage });
 
 module.exports.index = async (req, res, next) => {
     const allListings = await Listing.find({});
+    console.log(allListings);
     res.render("listings/index.ejs", {allListings});
 }
 
@@ -29,24 +51,49 @@ module.exports.showListing = async (req, res, next) => {
     res.render("listings/show.ejs", {listing});
 }
 
-module.exports.createListing = async(req, res, next) => {
+module.exports.createListing = async (req, res, next) => {
     try {
-        if(!req.body.listing){
+        if (!req.body.listing) {
             throw new ExpressError(400, "Send valid data for listing");
         }
-        // let {title, description, image, price, country, location} = req.body;
+
         const newListing = new Listing(req.body.listing);
         newListing.owner = req.user._id;
-        console.log(req.user);
-        
+
+        // If an image is uploaded, add the Cloudinary URL to the listing
+        if (req.file) {
+            newListing.image = {
+                url: req.file.path, // Cloudinary file path (URL)
+                filename: req.file.filename, // Unique Cloudinary file identifier
+            };
+        }
+
         await newListing.save();
         req.flash("success", "New Listing Created!");
         res.redirect("/listings");
-    }
-    catch(err) {
+    } catch (err) {
         next(err);
     }
 };
+
+// module.exports.createListing = async(req, res, next) => {
+//     try {
+//         if(!req.body.listing){
+//             throw new ExpressError(400, "Send valid data for listing");
+//         }
+//         // let {title, description, image, price, country, location} = req.body;
+//         const newListing = new Listing(req.body.listing);
+//         newListing.owner = req.user._id;
+//         console.log(req.user);
+        
+//         await newListing.save();
+//         req.flash("success", "New Listing Created!");
+//         res.redirect("/listings");
+//     }
+//     catch(err) {
+//         next(err);
+//     }
+// };
 
 module.exports.renderEditForm = async (req, res, next) => {
     try {

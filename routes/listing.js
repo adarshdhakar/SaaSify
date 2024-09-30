@@ -6,13 +6,26 @@ const { listingSchema, reviewSchema} = require("../schema.js");
 const Listing = require("../models/listing.js");
 const {isLoggedIn, isOwner, validateListing} = require("../middleware.js");
 const listingController = require("../controllers/listings.js");
+const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require("cloudinary").v2;
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'listings', // Your folder on Cloudinary
+    allowedFormats: ['jpeg', 'png', 'jpg']
+  }
+});
+
+const upload = multer({ storage });
 
 router
     .route("/")
     //Index Route
     .get(wrapAsync(listingController.index))
     //Create Route
-    .post(isLoggedIn, validateListing, wrapAsync(listingController.createListing));
+    .post(isLoggedIn, validateListing, upload.single("listing[image]"), wrapAsync(listingController.createListing));
 
 //New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);

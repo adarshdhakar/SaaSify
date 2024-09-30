@@ -23,5 +23,7 @@ router
 );
 
 router.get("/logout", userController.logout);
+router.get("/privacy", userController.privacy);
+router.get("/terms", userController.terms);
 
 module.exports = router;

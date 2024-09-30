@@ -45,3 +45,11 @@ module.exports.logout = (req, res, next) => {
         res.redirect("/listings");
     })
 };
+
+module.exports.privacy = (req, res) => {
+    res.render("users/privacy.ejs");
+};
+
+module.exports.terms = (req, res) => {
+    res.render("users/terms.ejs");
+}
