@@ -20,6 +20,7 @@ const MongoStore = require('connect-mongo');
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const homeRouter = require("./routes/home.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/saas";
 
@@ -103,6 +104,7 @@ app.get("/demouser", async(req, res) => {
     res.send(registeredUser);
 });
 
+app.use("/home", homeRouter);
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/review", reviewsRouter);
 app.use("/", userRouter);
