@@ -1,31 +1,33 @@
-const express = require('express');
-const router = express.Router();
-const Listing = require('../models/listing'); // Assuming listings are stored in a Listing model
-const User = require('../models/user'); // Assuming user model
+const Listing = require('../models/listing'); 
+const User = require('../models/user'); 
 
-// GET /cart - show items in cart
-router.get('/cart', async (req, res) => {
+module.exports.showCart = async (req, res) => {
     if (!req.user) {
         return res.redirect('/login');
     }
     const user = await User.findById(req.user._id).populate('cart');
-    res.render('cart', { cartItems: user.cart });
-});
+    res.render('cart/cart.ejs', { cartItems: user.cart });
+};
 
-// POST /cart/add - add item to cart
-router.post('/cart/add', async (req, res) => {
+module.exports.addToCart = async (req, res) => {
     const listingId = req.body.listingId;
     const listing = await Listing.findById(listingId);
     const user = await User.findById(req.user._id);
-    
-    user.cart.push(listing);
-    await user.save();
 
-    res.redirect('/cart');
-});
+    const isInCart = user.cart.some(item => item.equals(listing._id));
 
-// POST /cart/remove/:id - remove item from cart
-router.post('/cart/remove/:id', async (req, res) => {
+    if (isInCart) {
+        req.flash('error', 'This item is already in your cart.');
+    } else {
+        user.cart.push(listing);
+        await user.save();
+        req.flash('success', 'Item added to your cart.');
+    }
+
+    res.redirect(`/listings/${listingId}`);
+};
+
+module.exports.removeFromCart = async (req, res) => {
     const listingId = req.params.id;
     const user = await User.findById(req.user._id);
     
@@ -33,12 +35,4 @@ router.post('/cart/remove/:id', async (req, res) => {
     await user.save();
 
     res.redirect('/cart');
-});
-
-// POST /checkout - proceed to checkout (dummy route for now)
-router.post('/checkout', (req, res) => {
-    // Add your checkout logic here
-    res.send('Proceeding to checkout...');
-});
-
-module.exports = router;
+};

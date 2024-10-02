@@ -1,36 +1,132 @@
+<style>
+    /* Custom styles for the cart page */
+    .cart-item-card {
+        border: none;
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+    }
+
+    .cart-item-card:hover {
+        transform: scale(1.05);
+    }
+
+    .cart-item-card img {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-title {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .btn-success {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+    }
+
+    h4 {
+        color: #333;
+        font-weight: 600;
+    }
+
+    h2 {
+        color: #45A29E; /* Adjust this to your preferred palette */
+        font-weight: bold;
+    }
+
+    .alert {
+        background-color: #f0f8ff;
+        border: 1px solid #66FCF1;
+    }
+
+    /* Selected item styling */
+    .selected {
+        border: 2px solid #45A29E; /* Change the border color when selected */
+        background-color: rgba(69, 162, 158, 0.1); /* Light background for selected items */
+    }
+
+    /* Styled Purchase Button */
+    .btn-purchase {
+        background-color: #66FCF1;
+        color: #0B0C10;
+        padding: 12px 25px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
+        margin-top: 15px; /* Add margin for spacing */
+    }
+
+    .btn-purchase:hover {
+        background-color: #45A29E; /* Darker shade on hover */
+        transform: scale(1.05); /* Slight scale effect */
+    }
+
+    .btn-purchase:focus {
+        outline: none; /* Remove outline on focus */
+    }
+</style>
+
 <% layout("/layouts/boilerplate.ejs") %>
 
 <div class="container mt-5">
-    <h2 class="mb-4">My Cart</h2>
-
+    <h2 class="mb-4 text-center">My Cart</h2>
+    <h5 class="text-center">Select any 3 to start the bidding.</h5>
     <% if (cartItems.length === 0) { %>
-        <div class="alert alert-info text-center">
-            <p>Your cart is empty. <a href="/listings">Browse listings</a> to add items to your cart.</p>
+        <div class="alert alert-info text-center py-4">
+            <p>Your cart is empty. <a href="/listings" class="fw-bold text-decoration-none">Browse listings</a> to add items to your cart.</p>
         </div>
     <% } else { %>
-        <div class="row">
+        <div class="row justify-content-center">
             <% cartItems.forEach(item => { %>
-                <div class="card col-md-4 mb-4">
-                    <img src="<%= item.image.url %>" class="card-img-top" alt="<%= item.title %>">
+                <div class="card col-md-3 mx-3 mb-4 cart-item-card shadow-sm" id="item-<%= item._id %>">
+                    <img src="<%= item.image.url %>" class="card-img-top rounded-top" alt="<%= item.title %>">
                     <div class="card-body">
-                        <h5 class="card-title"><%= item.title %></h5>
-                        <p class="card-text">$ <%= item.price %> per user/month</p>
-                        <p class="card-text"><i>by <%= item.owner.username %></i></p>
-                        <form method="POST" action="/cart/remove/<%= item._id %>">
-                            <button class="btn btn-danger">Remove from Cart</button>
+                        <h5 class="card-title text-center"><%= item.title %></h5>
+                        <p class="card-text text-center text-muted">$<%= item.price %> per user/month</p>
+                        <form method="POST" action="/cart/remove/<%= item._id %>" class="d-grid gap-2">
+                            <button class="btn btn-danger btn-sm">Remove from Cart</button>
                         </form>
                     </div>
                 </div>
             <% }) %>
         </div>
+
         <div class="row mt-4">
-            <!-- <%= cartItems %> -->
-            <div class="col text-right">
+            <div class="col-md-12 text-center">
                 <h4>Total: $<%= cartItems.reduce((total, item) => parseInt(total) + parseInt(item.price), 0) %> per user/month</h4>
-                <form method="POST" action="/checkout">
-                    <button class="btn btn-success">Proceed to Checkout</button>
-                </form>
+                <button class="btn-purchase">Purchase all 3</button>
+
+                <br/>
+                <br/>
+                <p>Select up to 3 products to start a Dutch reverse auction.</p>
+                
+                <button class="btn btn-success btn-lg mt-3" id="startAuctionBtn" disabled>Let the Bidding Start</button>
             </div>
         </div>
+        
+        <br/>
     <% } %>
 </div>
+
+<script>
+    // Enable or disable the "Let the Bidding Start" button based on product selection
+    const auctionButton = document.getElementById('startAuctionBtn');
+    const cartItemCards = document.querySelectorAll('.cart-item-card');
+    let selectedCount = 0;
+
+    cartItemCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const isSelected = card.classList.toggle('selected');
+            
+            // Update selected count
+            selectedCount += isSelected ? 1 : -1;
+
+            // Enable or disable the auction button based on selection
+            auctionButton.disabled = selectedCount === 0 || selectedCount > 3 || selectedCount === 1;
+        });
+    });
+</script>

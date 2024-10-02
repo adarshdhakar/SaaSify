@@ -206,3 +206,15 @@ body {
     }
 }
 
+/* In your CSS file */
+.listing-card {
+    border: 2px solid #66FCF1; /* You can change the color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation for hover */
+}
+
+.listing-card:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
