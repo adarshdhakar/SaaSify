@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/home" aria-label="Home">
             <i class="fa-regular fa-compass"></i>
@@ -25,9 +25,11 @@
                     <a class="nav-link" href="/signup">Sign Up</a>
                     <a class="nav-link" href="/login">Log In</a>
                 <% } else { %>
+                    <a class="nav-link" href="/cart">My Cart</a>
                     <a class="nav-link" href="/logout">Log Out</a>
                 <% } %>
             </div>
         </div>
     </div>
 </nav>
+<br/><br/><br/>

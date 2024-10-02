@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<div class="container mt-5">
+    <h2 class="mb-4">My Cart</h2>
+
+    <% if (cartItems.length === 0) { %>
+        <div class="alert alert-info text-center">
+            <p>Your cart is empty. <a href="/listings">Browse listings</a> to add items to your cart.</p>
+        </div>
+    <% } else { %>
+        <div class="row">
+            <% cartItems.forEach(item => { %>
+                <div class="card col-md-4 mb-4">
+                    <img src="<%= item.image.url %>" class="card-img-top" alt="<%= item.title %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= item.title %></h5>
+                        <p class="card-text">$ <%= item.price %> per user/month</p>
+                        <p class="card-text"><i>by <%= item.owner.username %></i></p>
+                        <form method="POST" action="/cart/remove/<%= item._id %>">
+                            <button class="btn btn-danger">Remove from Cart</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        <div class="row mt-4">
+            <!-- <%= cartItems %> -->
+            <div class="col text-right">
+                <h4>Total: $<%= cartItems.reduce((total, item) => parseInt(total) + parseInt(item.price), 0) %> per user/month</h4>
+                <form method="POST" action="/checkout">
+                    <button class="btn btn-success">Proceed to Checkout</button>
+                </form>
+            </div>
+        </div>
+    <% } %>
+</div>
