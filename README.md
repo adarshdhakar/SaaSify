@@ -118,17 +118,16 @@ ATLASDB_URL: The connection string for your MongoDB Atlas database.
 SECRET: A secret key used for signing session cookies.
 
 ## Usage
-
-1. **Start the Application**: You can start the application using the following command:
-   ```bash
+```bash
+1. Start the Application: You can start the application using:
    node app.js
-Or, for development with auto-reloading, use:
 
-bash
-Copy code
-nodemon app.js
-Access the Application: Open your web browser and navigate to http://localhost:3000 (or the specified port) to access the application.
+Or, for development with auto-reloading:
 
-Create an Account: Go to the signup page to create a new account. If you already have an account, simply log in.
+   nodemon app.js
 
-Browse Listings: Once logged in, you can navigate through the available service listings. Add items to your cart and proceed to checkout when you're ready.
+2. Access the Application: Open your web browser and go to http://localhost:3000 (or the specified port) to access the application.
+
+3. Create an Account: Go to the signup page to create a new account or log in if you already have one.
+
+4. Browse Listings: Navigate through the available service listings, add items to your cart, and proceed to checkout.
