@@ -108,15 +108,6 @@ Create a .env file in the root directory and include the following variables:
     ATLASDB_URL=your_mongodb_atlas_connection_string
     SECRET=your_session_secret
 
-## Description of Environment Variables:
-CLOUDINARY_CLOUD_NAME: The name of your Cloudinary cloud account.
-CLOUDINARY_API_KEY: Your Cloudinary API key for authentication.
-CLOUDINARY_API_SECRET: Your Cloudinary API secret for security.
-EMAIL_USER: The email address used for sending notifications.
-EMAIL_PASS: The password for the email account used.
-ATLASDB_URL: The connection string for your MongoDB Atlas database.
-SECRET: A secret key used for signing session cookies.
-
 ## Usage
 ```bash
 1. Start the Application: You can start the application using:
