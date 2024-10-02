@@ -18,8 +18,6 @@ Explore the live version of SaaSify: [SaaSify Live](https://saasify-qndl.onrende
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
