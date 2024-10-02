@@ -53,3 +53,7 @@ module.exports.privacy = (req, res) => {
 module.exports.terms = (req, res) => {
     res.render("users/terms.ejs");
 }
+
+module.exports.contact = (req, res) => {
+    res.render("users/contactus.ejs");
+}

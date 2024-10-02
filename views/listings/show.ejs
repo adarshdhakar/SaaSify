@@ -20,20 +20,22 @@
             <% } else { %>
                 <button class="btn btn-outline-secondary disabled">Log in to Add to Cart</button>
             <% } %>
-
-            <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
                 <div class="d-flex justify-content-between align-items-center mt-3">
+                    <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
                     <div>
                         <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark me-2">Edit</a>
                         <form method="POST" action="/listings/<%=listing._id %>?_method=DELETE" class="d-inline">
                             <button type="submit" class="btn btn-dark">Delete</button>
                         </form>
                     </div>
+                    <% } %>
+                    <% if(currUser) { %>
                     <div>
-                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-success">Purchase Now</a>
+                        <a href="/checkout/<%= listing._id %>" class="btn btn-success">Purchase Now</a>
                     </div>
+                    <% } %> 
                 </div>
-            <% } %>
+            
         </div>
     </div>
 </div>

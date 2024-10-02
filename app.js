@@ -22,6 +22,7 @@ const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const homeRouter = require("./routes/home.js");
 const cartRouter = require("./routes/cart.js");
+const auctionRouter = require("./routes/auction.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/saas";
 
@@ -67,7 +68,8 @@ app.use(session(sessionOptions));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
@@ -109,6 +111,19 @@ app.use("/home", homeRouter);
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/review", reviewsRouter);
 app.use("/cart", cartRouter);
+app.use('/auction', auctionRouter);
+app.get('/checkout/:listingId', async(req, res) => {
+  const listingId = req.params.listingId;
+  const listing = await Listing.findById(listingId).populate("owner");
+  const user = await User.findById(listing.owner._id);
+  const acceptedQuote = req.query.acceptedQuote || null;
+  res.render('checkout', { listing, user, acceptedQuote });
+});
+app.post('/purchase', async(req, res) => {
+  req.flash("success", "Payment successful!");
+  res.redirect("/listings");
+});
+
 app.use("/", userRouter);
 
 //Test Route
