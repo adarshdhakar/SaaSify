@@ -9,6 +9,7 @@ Explore the live version of SaaSify: [SaaSify Live](https://saasify-qndl.onrende
 ## Live LOOM Video Link
 
 [SaaSify Demo Video](https://www.loom.com/share/d80a4db1df0645e7b8175055c3465885?sid=25fb08e2-d38a-4ff1-8aa0-357dc713e890)
+The video I made it quite slow, better to watch it at 2x
 
 ## Table of Contents
 
