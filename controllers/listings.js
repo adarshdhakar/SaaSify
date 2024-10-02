@@ -4,6 +4,7 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 
 // Cloudinary configuration
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -76,25 +77,6 @@ module.exports.createListing = async (req, res, next) => {
     }
 };
 
-// module.exports.createListing = async(req, res, next) => {
-//     try {
-//         if(!req.body.listing){
-//             throw new ExpressError(400, "Send valid data for listing");
-//         }
-//         // let {title, description, image, price, country, location} = req.body;
-//         const newListing = new Listing(req.body.listing);
-//         newListing.owner = req.user._id;
-//         console.log(req.user);
-        
-//         await newListing.save();
-//         req.flash("success", "New Listing Created!");
-//         res.redirect("/listings");
-//     }
-//     catch(err) {
-//         next(err);
-//     }
-// };
-
 module.exports.renderEditForm = async (req, res, next) => {
     try {
         let {id} = req.params;
@@ -111,11 +93,29 @@ module.exports.renderEditForm = async (req, res, next) => {
 };
 
 module.exports.updateListing = async (req, res, next) => {
-    // if(!req.body.listing){
-    //     throw new ExpressError(400, "Send valid data for listing");
-    // }
-    let {id} = req.params;    
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    const { id } = req.params;
+    const listing = await Listing.findById(id);
+
+    if (req.file) {
+        // Delete the old image from Cloudinary if needed
+        if (listing.image && listing.image.public_id) {
+            await cloudinary.uploader.destroy(listing.image.public_id);
+        }
+        // Upload new image to Cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "listings"
+        });
+        req.body.listing.image = {
+            url: result.secure_url,
+            public_id: result.public_id
+        };
+    } else {
+        // If no new image is uploaded, keep the existing image
+        req.body.listing.image = listing.image;
+    }
+
+    // Update the listing with new data
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
 };
