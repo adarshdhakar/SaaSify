@@ -2,6 +2,19 @@
 
 SaaSify is a robust web application designed to streamline the management of service listings, enable users to add services to their cart, and facilitate auction processes. Built with **Node.js** and **EJS**, this application provides a user-friendly interface and powerful backend functionality for managing services and enhancing user experience.
 
+<table>
+  <tr>
+    <td><img src="docs/images/1.png" alt="Sample Image 1" width="500"></td>
+    <td><img src="docs/images/2.png" alt="Sample Image 2" width="500"></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="docs/images/3.png" alt="Sample Image 3" width="500"></td>
+    <td><img src="docs/images/4.png" alt="Sample Image 4" width="500"></td>
+  </tr>
+</table>
+
 ## Live Demo
 
 Explore the live version of SaaSify: [SaaSify Live](https://saasify-qndl.onrender.com/home)
@@ -23,12 +36,70 @@ The video I made it quite slow, better to watch it at 2x
 ## Features
 
 - **User Registration and Authentication**: Users can create an account, log in, and log out securely.
+<table>
+  <tr>
+    <td><img src="docs/images/5.png" alt="Sample Image 5" width="500"></td>
+    <td><img src="docs/images/6.png" alt="Sample Image 6" width="500"></td>
+  </tr>
+</table>
+
 - **Service Listings**: Users can create, read, update, and delete service listings. Each listing includes a title, description, price, owner, and image.
+<table>
+  <tr>
+    <td><img src="docs/images/7.png" alt="Sample Image 7" width="500"></td>
+    <td><img src="docs/images/8.png" alt="Sample Image 8" width="500"></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="docs/images/9.png" alt="Sample Image 9" width="500"></td>
+    <td><img src="docs/images/10.png" alt="Sample Image 10" width="500"></td>
+  </tr>
+</table><table>
+  <tr>
+    <td><img src="docs/images/11.png" alt="Sample Image 11" width="500"></td>
+    <td><img src="docs/images/12.png" alt="Sample Image 12" width="500"></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="docs/images/14.png" alt="Sample Image 13" width="500"></td>
+  </tr>
+</table>
+
 - **Shopping Cart Functionality**: Users can add listings to their shopping cart for easy management of purchases.
+<table>
+  <tr>
+    <td><img src="docs/images/15.png" alt="Sample Image 14" width="500"></td>
+    <td><img src="docs/images/16.png" alt="Sample Image 15" width="500"></td>
+  </tr>
+</table>
+
 - **Checkout Process**: Seamless checkout process for completing purchases.
+<table>
+  <tr>
+    <td><img src="docs/images/13.png" alt="Sample Image 16" width="500"></td>
+  </tr>
+</table>
+
 - **Auction Feature**: Users can initiate and participate in auctions for services.
+<table>
+  <tr>
+    <td><img src="docs/images/17.png" alt="Sample Image 17" width="500"></td>
+    <td><img src="docs/images/18.png" alt="Sample Image 18" width="500"></td>
+  </tr>
+</table>
+
 - **User Reviews**: Customers can leave reviews on listings, enhancing community feedback.
+
 - **Privacy and Terms of Service Pages**: Inform users about policies and terms.
+<table>
+  <tr>
+    <td><img src="docs/images/19.png" alt="Sample Image 19" width="500"></td>
+    <td><img src="docs/images/20.png" alt="Sample Image 20" width="500"></td>
+  </tr>
+</table>
+
 - **Responsive Design**: Built with Bootstrap for a modern, responsive layout across devices.
 
 ## Technologies Used
